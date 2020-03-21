@@ -4,10 +4,13 @@ import (
 	"net/http"
 
 	"github.com/aiman-zaki/go_attrio_http/handlers"
+	"github.com/aiman-zaki/go_attrio_http/models"
 	"github.com/go-chi/chi"
 )
 
 func main() {
+
+	models.InitAttrio()
 
 	r := chi.NewRouter()
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
