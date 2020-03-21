@@ -1,11 +1,13 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/aiman-zaki/go_attrio_http/handlers"
 	"github.com/aiman-zaki/go_attrio_http/models"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/cors"
 )
 
 func main() {
@@ -17,6 +19,13 @@ func main() {
 		w.Write([]byte("welcome"))
 	})
 
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{},
+		AllowedMethods:   []string{"GET", "POST", "DELETE"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowCredentials: true,
+	})
+
 	r.Mount("/contact-us", handlers.ContactUsResources.Routes(handlers.ContactUsResources{}))
-	http.ListenAndServe(":3000", r)
+	log.Fatal(http.ListenAndServe(":3000", c.Handler(r)))
 }
