@@ -28,13 +28,6 @@ func (rs ContactUsResources) Routes() chi.Router {
 func (rs ContactUsResources) Create(w http.ResponseWriter, r *http.Request) {
 	var m models.ContactUs
 	db := pg.Connect(services.PgOptions())
-	r.ParseForm()
-
-	m.Email = r.FormValue("email")
-	m.Name = r.FormValue("name")
-	m.Subject = r.FormValue("subject")
-	m.Message = r.FormValue("message")
-
 	defer db.Close()
 	wrappers.JSONDecodeWrapper(w, r, &m)
 
